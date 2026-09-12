@@ -11,7 +11,7 @@ CREATE TABLE Pets (
     Raca NVARCHAR(80) NOT NULL,                -- raça do pet
     Idade INT NOT NULL,                        -- idade em anos
     Peso FLOAT NOT NULL,                       -- peso em kg
-    UsuarioId INT NOT NULL                     -- referência ao tutor (fora do escopo desta entrega)
+    UsuarioId INT NOT NULL                     -- referência ao tutor
 );
 
 CREATE TABLE Consultas (

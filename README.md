@@ -1,102 +1,89 @@
 # PetCareAI - API de Gestão de Pets 🐾
 
-> **FIAP - Faculdade de Informática e Administração Paulista**  
-> **Disciplina:** Advanced Business Development with .NET  
-> **Sprint 3**
+API RESTful desenvolvida em **ASP.NET Core 8** para o gerenciamento de pets, serviços de cuidados e agendamentos de consultas com assistente IA integrado. Projeto desenvolvido para a avaliação da **Sprint 3** do curso de Análise e Desenvolvimento de Sistemas.
 
 ---
 
 ## 👥 Integrantes do Grupo
 
-- **Guilherme de Andrade Martini** – RM 566087
-- **Nathan Gonçalves Pereira Mendes** – RM 564666
-- **Raphael Gomes Mancera** – RM 562279
-- **Bruno Vinicius Barbosa** – RM 566366
-
-
----
-
-## 📌 Sobre o Projeto
-
-O **PetCareAI** é uma solução para o gerenciamento inteligente de pets e assistência à saúde animal. Nesta **3ª Sprint**, a aplicação ASP.NET Core foi evoluída com foco em **Monitoramento, Observabilidade e Testes Automatizados**, garantindo alta resiliência, rastreabilidade e qualidade de código seguindo as melhores práticas do mercado.
+* **Bruno Vinicius Barbosa** - RM 566366
+* **Guilherme de Andrade Martini** - RM 566087
+* **Nathan Gonçalves Pereira Mendes** - RM 564666
+* **Raphael Gomes Mancera** - RM 562279
 
 ---
 
-## 🛠️ Tecnologias e Recursos
+## 📌 Descrição do Projeto
 
-- **.NET 8 / ASP.NET Core API**
-- **Entity Framework Core** (In-Memory Database)
-- **Swagger / OpenAPI** (Documentação interativa das rotas)
-- **Serilog** (Logging Estruturado gravado em Console e Arquivos)
-- **Health Checks** (`Microsoft.Extensions.Diagnostics.HealthChecks`)
-- **OpenTelemetry** (Tracing distribuído e coleta de métricas)
-- **xUnit, Moq & WebApplicationFactory** (Suíte de Testes Unitários e de Integração — Padrão AAA)
+O **PetCareAI** é uma solução para clínicas veterinárias e tutores de animais de estimação. A aplicação centraliza o histórico de atendimento dos pets, agendamentos de consultas e recomendações de saúde personalizadas baseadas em inteligência artificial.
+
+### 📜 Principais Funcionalidades
+* **CRUD Completo de Pets e Consultas**: Cadastro, listagem, atualização e remoção de registros de animais e históricos de consultas.
+* **Persistência de Dados Relacional**: Mapeamento objeto-relacional com **Entity Framework Core** conectado ao banco de dados **Azure SQL**.
+* **Testes Automatizados**: Suíte de testes unitários com **xUnit**, **Moq** e **FluentAssertions**.
+* **Observabilidade e Logs**: Monitoramento via **Serilog**, **OpenTelemetry** e **Health Checks** embutidos para verificação de status do serviço.
 
 ---
 
-## 📁 Estrutura da Solução
+## 🔄 Mudanças e Atualizações (Sprint 3)
 
-```text
-PetCareSprint3C#/
-│
-├── src/
-│   └── PetCareAI.Api/               # Projeto Principal da API (Controllers, Services, Models)
-│
-├── tests/
-│   ├── PetCareAI.Tests.Unit/        # Testes Unitários de Domínio e Serviços (xUnit + Moq)
-│   └── PetCareAI.Tests.Integration/ # Testes de Integração de Endpoints (WebApplicationFactory)
-│
-└── PetCareSprint3C.sln              # Arquivo de Solução do Projeto
-🚀 Como Executar a Aplicação
-Pré-requisitos
-.NET 8.0 SDK instalado.
+Nesta entrega, foram implementadas as seguintes melhorias técnicas na arquitetura da solução:
 
-Passo a passo
-Clone ou baixe o repositório.
+1. **Migração para Azure SQL**: Conexão e script de criação do banco de dados relacional na nuvem Microsoft Azure.
+2. **Nova Entidade `Consulta`**: Criação de endpoints e repositórios para gerenciamento de consultas veterinárias vinculadas aos pets.
+3. **Suíte de Testes com xUnit**:
+   * Implementação de testes unitários para a camada de serviço (`PetServiceTests`).
+   * Adição dos pacotes `FluentAssertions` para asserções fluídas e `Moq` para isolamento de dados.
+4. **Padronização do Repositório**: Reestruturação da raiz do projeto (`src`, `tests`, `.sln`) para integração contínua e avaliação limpa.
+5. **Observabilidade Ampliada**: Adição do endpoint `/health` para validação de saúde do ecossistema e suporte a exportação de métricas OpenTelemetry.
 
-Abra o terminal na pasta raiz da solução (PetCareSprint3C#).
+---
 
-Execute o comando para iniciar a API no ambiente de desenvolvimento:
+## 🛠️ Tecnologias Utilizadas
 
-PowerShell
-$env:ASPNETCORE_ENVIRONMENT="Development"; dotnet run --project src/PetCareAI.Api/PetCareAI.Api.csproj
-A API estará acessível em: http://localhost:5000
+* **Linguagem / Framework**: C# 12 | .NET 8.0 (ASP.NET Core Web API)
+* **Banco de Dados**: Azure SQL Server / Entity Framework Core 8
+* **Testes**: xUnit, Moq, FluentAssertions
+* **Logs & Telemetria**: Serilog, OpenTelemetry, HealthChecks
+* **Documentação de API**: Swagger / OpenAPI
 
-📊 Endpoints de Monitoramento e Observabilidade
-Health Check: GET http://localhost:5000/health
+---
 
-Verifica a saúde da aplicação, conexões e disponibilidade do serviço.
+## 🚀 Como Executar o Projeto
 
-Swagger UI: GET http://localhost:5000/swagger
+### Pré-requisitos
+* [.NET 8.0 SDK](https://dotnet.microsoft.com/download/dotnet/8.0) instalado.
+* IDE (Visual Studio 2022, VS Code ou Rider).
 
-Interface interativa para documentação, teste de rotas e schemas dos endpoints.
+### Passos de Execução
 
-🧪 Como Executar os Testes Automatizados
-A suíte de testes cobre a camada de serviços (unidade) e os fluxos HTTP dos endpoints (integração), utilizando o padrão AAA (Arrange, Act, Assert) e nomenclaturas padronizadas (MetodoTestado_Cenario_ResultadoEsperado).
+1. **Clonar o repositório:**
+   ```bash
+   git clone [https://github.com/Guilhermedev2807/PetCareAI-Sprint3.git](https://github.com/Guilhermedev2807/PetCareAI-Sprint3.git)
+   cd PetCareAI-Sprint3
+Restaurar as dependências do projeto:
 
-Para executar todos os testes da solução, rode o seguinte comando no terminal:
+Bash
+dotnet restore PetCareSprint3C.sln
+Executar a suíte de testes unitários:
 
-PowerShell
-dotnet test PetCareSprint3C.sln
-Para rodar os projetos de teste separadamente:
-
-Apenas Testes Unitários:
-
-PowerShell
+Bash
 dotnet test tests/PetCareAI.Tests.Unit/PetCareAI.Tests.Unit.csproj
-Apenas Testes de Integração:
+Executar a API:
 
-PowerShell
-dotnet test tests/PetCareAI.Tests.Integration/PetCareAI.Tests.Integration.csproj
+Bash
+dotnet run --project src/PetCareAI.Api/PetCareAI.Api.csproj
+Acessar a documentação no navegador:
+Navegue até http://localhost:5000/swagger ou https://localhost:7000/swagger.
+
 
 ---
 
-### Passo a Passo para Atualizar no GitHub:
+### Como atualizar no GitHub após salvar o arquivo:
 
-1. Abra o arquivo `README.md` no seu VS Code, cole o conteúdo acima e salve.
-2. Abra o terminal e execute os comandos para atualizar o GitHub:
+Depois de colar o conteúdo no `README.md` e salvar no VS Code, rode estes comandos no terminal para subir a alteração:
 
 ```powershell
 git add README.md
-git commit -m "docs: adiciona nomes e RMs do grupo no README"
+git commit -m "docs: atualiza README.md com integrantes, descricao e mudancas da Sprint 3"
 git push origin main
