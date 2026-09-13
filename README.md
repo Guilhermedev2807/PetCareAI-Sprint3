@@ -108,3 +108,7 @@ A aplicação roda em um **Azure App Service** (Linux, sem containers), conectad
 5. Acesse `https://<nome-do-webapp>.azurewebsites.net/swagger` para confirmar que a API está no ar.
 
 ---
+
+### Diagrama de Arquitetura
+
+![Arquitetura da Solução](diagrama-arquitetura.png)
