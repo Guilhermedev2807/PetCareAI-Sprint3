@@ -17,6 +17,10 @@ API RESTful desenvolvida em **ASP.NET Core 8** para o gerenciamento de pets, ser
 
 O **PetCareAI** é uma solução para clínicas veterinárias e tutores de animais de estimação. A aplicação centraliza o histórico de atendimento dos pets, agendamentos de consultas e recomendações de saúde personalizadas baseadas em inteligência artificial.
 
+### 💡 Benefícios para o Negócio
+
+Para a clínica veterinária, ter o histórico de pets e consultas centralizado e relacionado elimina a dependência de fichas físicas ou planilhas soltas — qualquer atendimento pode consultar rapidamente o histórico completo de um animal, sem retrabalho. Para o tutor, isso significa atendimentos mais rápidos e menos repetição de informação a cada visita. Por rodar em nuvem, a solução também fica acessível de qualquer lugar da clínica, sem depender de um servidor local.
+
 ### 📜 Principais Funcionalidades
 * **CRUD Completo de Pets e Consultas**: Cadastro, listagem, atualização e remoção de registros de animais e históricos de consultas.
 * **Persistência de Dados Relacional**: Mapeamento objeto-relacional com **Entity Framework Core** conectado ao banco de dados **Azure SQL**.
@@ -59,31 +63,48 @@ Nesta entrega, foram implementadas as seguintes melhorias técnicas na arquitetu
 
 1. **Clonar o repositório:**
    ```bash
-   git clone [https://github.com/Guilhermedev2807/PetCareAI-Sprint3.git](https://github.com/Guilhermedev2807/PetCareAI-Sprint3.git)
+   git clone https://github.com/Guilhermedev2807/PetCareAI-Sprint3.git
    cd PetCareAI-Sprint3
-Restaurar as dependências do projeto:
+   ```
 
-Bash
-dotnet restore PetCareSprint3C.sln
-Executar a suíte de testes unitários:
+2. **Restaurar as dependências do projeto:**
+   ```bash
+   dotnet restore PetCareSprint3C.sln
+   ```
 
-Bash
-dotnet test tests/PetCareAI.Tests.Unit/PetCareAI.Tests.Unit.csproj
-Executar a API:
+3. **Executar a suíte de testes unitários:**
+   ```bash
+   dotnet test tests/PetCareAI.Tests.Unit/PetCareAI.Tests.Unit.csproj
+   ```
 
-Bash
-dotnet run --project src/PetCareAI.Api/PetCareAI.Api.csproj
-Acessar a documentação no navegador:
-Navegue até http://localhost:5000/swagger ou https://localhost:7000/swagger.
+4. **Executar a API:**
+   ```bash
+   dotnet run --project src/PetCareAI.Api/PetCareAI.Api.csproj
+   ```
 
+5. **Acessar a documentação no navegador:**
+   Navegue até `http://localhost:5000/swagger` ou `https://localhost:7000/swagger`.
 
 ---
 
-### Como atualizar no GitHub após salvar o arquivo:
+## ☁️ Infraestrutura em Nuvem (Azure)
 
-Depois de colar o conteúdo no `README.md` e salvar no VS Code, rode estes comandos no terminal para subir a alteração:
+A aplicação roda em um **Azure App Service** (Linux, sem containers), conectado a um **Azure SQL Database** (PaaS), ambos provisionados via Azure CLI.
 
-```powershell
-git add README.md
-git commit -m "docs: atualiza README.md com integrantes, descricao e mudancas da Sprint 3"
-git push origin main
+### Passo a passo de deploy
+
+1. Provisione os recursos na Azure (Resource Group, Azure SQL Server, banco, firewall, App Service Plan e Web App) via Azure CLI.
+2. Publique o build da aplicação especificamente para Linux:
+   ```powershell
+   dotnet publish -c Release -r linux-x64 --self-contained false -o ./publish
+   ```
+3. Compacte o resultado publicado e envie para o App Service:
+   ```powershell
+   Add-Type -AssemblyName System.IO.Compression.FileSystem
+   [System.IO.Compression.ZipFile]::CreateFromDirectory((Resolve-Path ./publish).Path, (Join-Path (Get-Location) "publish.zip"))
+   az webapp deploy --resource-group <nome-do-resource-group> --name <nome-do-webapp> --src-path ./publish.zip --type zip --clean true
+   ```
+4. As migrations do Entity Framework são aplicadas automaticamente ao iniciar a aplicação, criando as tabelas `Pets` e `Consultas` no Azure SQL.
+5. Acesse `https://<nome-do-webapp>.azurewebsites.net/swagger` para confirmar que a API está no ar.
+
+---
